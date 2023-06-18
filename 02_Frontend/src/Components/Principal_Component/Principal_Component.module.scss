@@ -1,0 +1,24 @@
+.mainContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.psqlMainInput {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  justify-content: center;
+}
+
+.psqlInput {
+  height: 40px;
+}
+
+.principalButtons {
+  display: flex;
+  gap: 500px;
+  justify-content: center;
+  align-items: center;
+}
