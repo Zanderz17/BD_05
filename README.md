@@ -1,5 +1,45 @@
 # Proyecto 02 - Base de datos 2
 
+# Resumen
+El presente proyecto tiene como objetivo desarrollar un motor de búsqueda para arXiv, un repositorio en línea que alberga millones de artículos académicos en STEM. Este motor de búsqueda estará diseñado para facilitar la recuperación eficaz de artículos académicos a través de consultas de texto libre, por lo que la propuesta del proyecto es construir un índice invertido en memoria secundaria usando la estrategia de Blocked Sort-Based Indexing (BSBI), así como rankear los resultados de búsqueda mediante un score basado en la similitud de cosenos y la normalización de términos. 
+Además, este proyecto también realizará una comparación del rendimiento del motor de búsqueda implementado en Python contra el de Postgres. 
+
+# Dominio de datos
+Se hará uso de un [dataset](https://www.kaggle.com/datasets/Cornell-University/arxiv) de más de 1.7 millones de artículos académicos de arXiv. Cada artículo dentro del repositorio se encuentra descrito de acuerdo a la siguiente información:
+
+- **Id**: Número de identificación del artículo académico en arXiv
+- **submitter**: Nombre de quién subió el artículo académico
+- **authors**: Autores del artículo académico
+- **title:** Título del artículo académico
+- **comments**: Información adicional, como número de páginas y figuras
+- **journal**: información sobre la revista en la que se publicó el artículo académico
+- **doi**: Identificador de Objeto Digital (enlace permanente de la ubicación del artículo en Internet)
+- **report-no**: Número de informe técnico o número de preimpresión asociado con el artículo académico
+- **categories**: Categorías en los que es clasificado el artículo académico según arXiv
+- **license**: Indica si el artículo académico cuenta con licencia de distribución
+- **abstract**: Resumen del artículo académico
+- **versions**: El historial de versiones del artículo académico
+- **update_date**: Fecha de la última actualización
+- **authors_parsed**: Lista de los autores del artículo académico
+
+Cabe señalar que, para la construcción de nuestro índice invertido, consideramos pertinente extraer solo los campos más relevantes de cada documento: el id y el abstract.
+
+# Backend
+## 1. Construcción del índice invertido en memoria secundaria aplicando la estrategia de Blocked Sort-Based Indexing (BSBI):
+
+Para ello explicaremos la función load(self):
+- **Carga de los artículos y preprocesamiento:** La función inicia recorriendo el archivo de datos para leer todos los artículos del dataset. Para la construcción de nuestro índice invertido, solo se extrajo los campos más relevantes de cada documento: el id y el abstract. Posteriormente, se realiza el preprocesamiento del abstract de cada documento lo que implicó realizar el proceso de tokenización, filtrado de stopwords y la reducción de palabras mediante Stemming.
+
+- **Inserción en el índice invertido local:** Después, la función inserta los términos preprocesados en un índice invertido local. Cabe señalar que, este índice invertido tendrá la siguiente forma: [keyword] = {doc_id_1, freq}, {doc_id_2, freq}, ...., debido a que también se almacenará la frecuencia del término en cada documento en el que aparezca (TF), un recurso que será utilizado en el cálculo de nuestro Scoring. Si el tamaño del índice invertido local supera el tamaño de bloque definido, se guarda en un archivo auxiliar y se limpia para futuras inserciones.
+
+- **Cálculo de la frecuencia del documento (DF):** La función actualiza un diccionario `document_frequency` que almacena la cantidad de documentos que contienen un token, lo cual nos permitirá calcular el Scoring posteriormente.
+
+- **Merge:** Finalmente, la función inicializa buffers para cada archivo de índice invertido y utiliza una cola de prioridad para fusionar los archivos de forma ordenada en un índice invertido global llamando a la función merge(self, buffers, active_files_index, priority_queue, buffers_line_number).
+
+
+## 2. Cálculo del Scoring aplicando la técnica de similitud de coseno:
+
+
 # Frontend
 
 ## Generalized Inverted Index (GIN)
