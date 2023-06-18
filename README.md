@@ -22,17 +22,18 @@ Se hará uso de un [dataset](https://www.kaggle.com/datasets/Cornell-University/
 - **update_date**: Fecha de la última actualización
 - **authors_parsed**: Lista de los autores del artículo académico
 
-Cabe señalar que, para la construcción de nuestro índice invertido, consideramos pertinente extraer solo los campos más relevantes de cada documento: el id y el abstract.
+Cabe señalar que, para la construcción de nuestro índice invertido, consideramos pertinente extraer solo los campos más relevantes de cada documento: el `id` y el `abstract`.
 
 # Backend
 ## 1. Construcción del índice invertido en memoria secundaria aplicando la estrategia de Blocked Sort-Based Indexing (BSBI)
 
-Para ello explicaremos la función load(self):
+Para ello explicaremos la función `load(self)`:
 - **Carga de los artículos y preprocesamiento:** La función inicia recorriendo el archivo de datos para leer todos los artículos del dataset. Para la construcción de nuestro índice invertido, solo se extrajo los campos más relevantes de cada documento: el id y el abstract. Posteriormente, se realiza el preprocesamiento del abstract de cada documento lo que implicó realizar el proceso de tokenización, filtrado de stopwords y la reducción de palabras mediante Stemming.
 ```py
 def preprocesamiento(self, texto)
 ```
 - **Inserción en el índice invertido local:** Después, la función inserta los términos preprocesados en un índice invertido local. Cabe señalar que, este índice invertido tendrá la siguiente forma: [keyword] = {doc_id_1, freq}, {doc_id_2, freq}, ...., debido a que también se almacenará la frecuencia del término en cada documento en el que aparezca (TF), un recurso que será utilizado en el cálculo de nuestro Scoring. Si el tamaño del índice invertido local supera el tamaño de bloque definido, se guarda en un archivo auxiliar y se limpia para futuras inserciones.
+
 ```py
 def insert_document_into_local_inverted_index(self, local_inverted_index, texto, doc_id)
 def check_block_size(self, local_inverted_index)
@@ -62,9 +63,9 @@ def tf_idf_weight_and_cosine_score(self, query_keyword_inv_ind, query_doc_freque
 ```py
 def score_normalization(self)
 ```
-- **Ordenamiento de puntuaciones:** Ordena las puntuaciones de los documentos en orden descendente.
+- **Ordenamiento de puntuaciones:** Se ordenan las puntuaciones de los documentos en orden descendente.
 
-**Búsqueda de documentos:** Busca y recupera los documentos correspondientes en el conjunto de datos basándose en las puntuaciones calculadas anteriormente.
+- **Búsqueda de documentos:** Finalmente, la función busca y recupera los documentos correspondientes en el conjunto de datos basándose en las puntuaciones calculadas anteriormente.
 ```py
 def get_documents(self, documents_retrieved)
 ```
