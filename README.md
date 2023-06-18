@@ -157,6 +157,10 @@ El procedimiento de carga se datos se realizó tanto en Postgres como en el algo
 |400.000|31138,03 |2801,95 |
 |500.000|81176,83 |7945,27 |
 
+<img src="./00_Imagenes_Informe/Carga3.png"  width="65%">
+
+<img src="./00_Imagenes_Informe/Carga4.png"  width="65%">
+
 ## Búsqueda
 
 Las búsquedas se realizaron sobre las mismas cantidades de datos cargadas de modo que los intervalos [5,000: 50,000] y [100,000: 500,000] se mantienen.
@@ -190,3 +194,7 @@ El procedimiento de búsqueda se realizó tanto en Postgres como en el algoritmo
 |300.000|56,941  |1,853 |
 |400.000|127,441 |3,357 |
 |500.000|301,655 |6,441 |
+
+<img src="./00_Imagenes_Informe/Busqueda3.png"  width="65%">
+
+<img src="./00_Imagenes_Informe/Busqueda4.png"  width="65%">
