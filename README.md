@@ -25,20 +25,55 @@ Se hará uso de un [dataset](https://www.kaggle.com/datasets/Cornell-University/
 Cabe señalar que, para la construcción de nuestro índice invertido, consideramos pertinente extraer solo los campos más relevantes de cada documento: el id y el abstract.
 
 # Backend
-## 1. Construcción del índice invertido en memoria secundaria aplicando la estrategia de Blocked Sort-Based Indexing (BSBI):
+## 1. Construcción del índice invertido en memoria secundaria aplicando la estrategia de Blocked Sort-Based Indexing (BSBI)
 
 Para ello explicaremos la función load(self):
 - **Carga de los artículos y preprocesamiento:** La función inicia recorriendo el archivo de datos para leer todos los artículos del dataset. Para la construcción de nuestro índice invertido, solo se extrajo los campos más relevantes de cada documento: el id y el abstract. Posteriormente, se realiza el preprocesamiento del abstract de cada documento lo que implicó realizar el proceso de tokenización, filtrado de stopwords y la reducción de palabras mediante Stemming.
-
+```py
+def preprocesamiento(self, texto)
+```
 - **Inserción en el índice invertido local:** Después, la función inserta los términos preprocesados en un índice invertido local. Cabe señalar que, este índice invertido tendrá la siguiente forma: [keyword] = {doc_id_1, freq}, {doc_id_2, freq}, ...., debido a que también se almacenará la frecuencia del término en cada documento en el que aparezca (TF), un recurso que será utilizado en el cálculo de nuestro Scoring. Si el tamaño del índice invertido local supera el tamaño de bloque definido, se guarda en un archivo auxiliar y se limpia para futuras inserciones.
-
+```py
+def insert_document_into_local_inverted_index(self, local_inverted_index, texto, doc_id)
+def check_block_size(self, local_inverted_index)
+```
 - **Cálculo de la frecuencia del documento (DF):** La función actualiza un diccionario `document_frequency` que almacena la cantidad de documentos que contienen un token, lo cual nos permitirá calcular el Scoring posteriormente.
 
-- **Merge:** Finalmente, la función inicializa buffers para cada archivo de índice invertido y utiliza una cola de prioridad para fusionar los archivos de forma ordenada en un índice invertido global llamando a la función merge(self, buffers, active_files_index, priority_queue, buffers_line_number).
+- **Merge:** Finalmente, la función inicializa buffers para cada archivo de índice invertido local y utiliza una cola de prioridad para fusionar los archivos de forma ordenada en un índice invertido global llamando a la función `merge`.
+  
+```py
+def merge(self, buffers, active_files_index, priority_queue, buffers_line_number)
+```
 
+## 2. Cálculo del Scoring aplicando la técnica de similitud de coseno
 
-## 2. Cálculo del Scoring aplicando la técnica de similitud de coseno:
+Para ello describiremos lo que realiza la función `score(self, query, k)`:
+- **Preprocesamiento del query y cálculo de frecuencias:** La consulta se preprocesa utilizando las técnicas de tokenización, filtrado de stopwords y la reducción de palabras mediante Stemming. Asimismo,  para cada token obtenido del query, se calcula su frecuencia.
 
+- **Búsqueda binaria:** Posteriormente, la función realiza una búsqueda binaria de los tokens de la query en el índice invertido global y crea un índice invertido en memoria principal que se llena con los keyword de la query y sus correspondientes entradas en el índice invertido global.
+```py
+def binary_search(self, query_doc_frequency, query_keyword_inv_ind)
+```
+- **Calcula pesos TF-IDF y Similitud de Coseno:** Luego, se calcula el peso TF-IDF de cada término en la consulta y la similitud de coseno entre el vector de la consulta y el vector de cada documento.
+```py
+def tf_idf_weight_and_cosine_score(self, query_keyword_inv_ind, query_doc_frequency)
+```
+- **Normalización de vectores:** Se normalizan los vectores para asegurar que los vectores de consulta y documento estén en la misma escala.
+```py
+def score_normalization(self)
+```
+- **Ordenamiento de puntuaciones:** Ordena las puntuaciones de los documentos en orden descendente.
+
+**Búsqueda de documentos:** Busca y recupera los documentos correspondientes en el conjunto de datos basándose en las puntuaciones calculadas anteriormente.
+```py
+def get_documents(self, documents_retrieved)
+```
+## 3. Función Retrieve
+
+La función retrieve se utiliza para recuperar un número específico k de documentos de los resultados de la búsqueda:
+```py
+def retrieve(self, k, documents_retrieved)
+```
 
 # Frontend
 
