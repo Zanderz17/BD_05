@@ -101,9 +101,9 @@ El procedimiento de carga se datos se realizó tanto en Postgres como en el algo
 |4.500|172,66|15,051|
 |5.000|175,58|17,241|
 
-![Carga1](./00_Imagenes_Informe/Carga1.png)
+<img src="./00_Imagenes_Informe/Carga1.png"  width="65%">
 
-![Carga2](./00_Imagenes_Informe/Carga2.png)
+<img src="./00_Imagenes_Informe/Carga2.png"  width="65%">
 
 ## Búsqueda
 
@@ -123,6 +123,6 @@ El procedimiento de búsqueda se realizó tanto en Postgres como en el algoritmo
 |4.500|1,657|0,038  |
 |5.000|1,671|0,051	|
 
-![Busqueda1](./00_Imagenes_Informe/Busqueda1.png)
+<img src="./00_Imagenes_Informe/Busqueda1.png"  width="65%">
 
-![Busqueda2](./00_Imagenes_Informe/Busqueda2.png)
+<img src="./00_Imagenes_Informe/Busqueda2.png"  width="65%">
