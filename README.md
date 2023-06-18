@@ -77,3 +77,52 @@ En esta ruta principalmente tenemos la carga de los índices tanto para nuestro 
 ### Consultas en Postgres
 
 ![Texto alternativo](./00_Imagenes_Informe/postgres.png)
+
+# Análisis de datos
+## Carga de datos
+
+Se testeó la carga de datos/documentos para cantidades rangos distintos de datos:
+- rango1: [5,000: 50,000] en intervalos de 5,000 
+- rango2: [100,000: 500,000] en intervalos de 100,000. 
+
+El rango de [5,000: 50,000] evidenciaría el crecimiento de la complejidad computacional en cantidades de datos pequeñas, mientras que el rango de [100,000: 500,000] evidenciaría el crecimiento de la complejidad computacional en cantidades de datos grandes.
+El procedimiento de carga se datos se realizó tanto en Postgres como en el algoritmo creado en Python.
+
+|  | Python | Postgres |
+|-----------|-------|----------------|
+| 500	|19,53 |1,977 |
+|1.000|34,98 |4,601 |
+|1.500|56,70 |5,100 |
+|2.000|74,65 |6,446 |
+|2.500|91,13 |8,080 |
+|3.000|103,62|9,616 |
+|3.500|129,69|11,163|
+|4.000|139,73|13,358|
+|4.500|172,66|15,051|
+|5.000|175,58|17,241|
+
+![Carga1](./00_Imagenes_Informe/Carga1.png)
+
+![Carga2](./00_Imagenes_Informe/Carga2.png)
+
+## Búsqueda
+
+Las búsquedas se realizaron sobre las mismas cantidades de datos cargadas de modo que los intervalos [5,000: 50,000] y [100,000: 500,000] se mantienen.
+El procedimiento de búsqueda se realizó tanto en Postgres como en el algoritmo creado en Python.
+
+|  | Python | Postgres |
+|-----------|-------|----------------|
+| 500	|0,133|0,020	|
+|1.000|0,420|0,012	|
+|1.500|0,516|0,019	|
+|2.000|0,643|0,022	|
+|2.500|0,991|0,029	|
+|3.000|1,120|0,031	|
+|3.500|1,507|0,031	|
+|4.000|1,547|0,036	|
+|4.500|1,657|0,038  |
+|5.000|1,671|0,051	|
+
+![Busqueda1](./00_Imagenes_Informe/Busqueda1.png)
+
+![Busqueda2](./00_Imagenes_Informe/Busqueda2.png)
