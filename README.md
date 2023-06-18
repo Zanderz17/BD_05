@@ -242,3 +242,7 @@ La búsqueda sobre 1 bloque de data implica llevar a RAM 1 vez el bloque y sobre
 <img src="./00_Imagenes_Informe/Busqueda4.png"  width="65%">
 
 La búsqueda sobre cantidades de data grandes implican la creación de múltiples bloques, siendo estos los cuales se llevan a memoria (uno a uno), al llevarse a memoria los datos del bloque se procesan para la generación de los scores de similitudes y se filtra los k elementos de mayor similitud de cada bloque. Es en la generación de los scores que se hace un recorrido cuadrático ya que se relaciona cada término del query con los términos del bloque para la generación de scores. Siendo aquel procedimiento el cual hace que la tendencia de crecimiento del costo computacional se vea cuadrática
+
+# Link del video
+
+- https://drive.google.com/file/d/1I4Bb7KK2oLJ8WZtpYJl7cgba9rqWoyvj/view?usp=sharing
