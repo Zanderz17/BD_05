@@ -183,6 +183,8 @@ El procedimiento de carga se datos se realizó tanto en Postgres como en el algo
 
 <img src="./00_Imagenes_Informe/Carga2.png"  width="65%">
 
+Para cantidades pequeñas de datos/documentos la mayoría de datos se almacenarán en uno o poca más cantidad de bloques, y el número de merges también será proporcional a ello. De ser 1 el número de bloques usados no se efectúan merges, mientras que si es n > 1, el número de merges será n-1. La gráfica tiene una tendencia lineal por el limitado número de bloques utilizados.
+
 ### Rango [100,000: 500,000], int = 100,000
 
 |  | Python | Postgres |
@@ -196,6 +198,8 @@ El procedimiento de carga se datos se realizó tanto en Postgres como en el algo
 <img src="./00_Imagenes_Informe/Carga3.png"  width="65%">
 
 <img src="./00_Imagenes_Informe/Carga4.png"  width="65%">
+
+Al trabajar con cantidades de data grandes, los bloques que se generan son múltiples y los merges proporcionales a ellos. Sea n el número de bloques que se generan, entonces será n-1 el número de merges que se realicen. Para cada merge que se realice se recorrerán todos los bloques generados, lo cual implica una cantidad de recorridos de (n)*(n-1). Es por ello que el crecimiento de la complejidad computacional tiene una tendencia polinomial de grado 2.
 
 ## Búsqueda
 
@@ -221,6 +225,8 @@ El procedimiento de búsqueda se realizó tanto en Postgres como en el algoritmo
 
 <img src="./00_Imagenes_Informe/Busqueda2.png"  width="65%">
 
+La búsqueda sobre 1 bloque de data implica llevar a RAM 1 vez el bloque y sobre eso realizar el procesamiento de la data, la generación de los scores de similitud y la selección de los k documentos de mayor semejanza a la query, o de tenerse una cantidad de data mayor pero pequeña, pues implicaría lo mismo multiplicado por n - 1, la cantidad de bloques adicionales que se tenga. El costo computacional de la búsqueda incrementa por la cantidad de bloques que se tienen que cargar en RAM, y el procesamiento del mismo, como la cantidad de bloques generados es limitada, la tendencia de crecimiento del costo computacional se ve lineal.
+
 ### Rango [100,000: 500,000], int = 100,000
 
 |  | Python | Postgres |
@@ -234,3 +240,5 @@ El procedimiento de búsqueda se realizó tanto en Postgres como en el algoritmo
 <img src="./00_Imagenes_Informe/Busqueda3.png"  width="65%">
 
 <img src="./00_Imagenes_Informe/Busqueda4.png"  width="65%">
+
+La búsqueda sobre cantidades de data grandes implican la creación de múltiples bloques, siendo estos los cuales se llevan a memoria (uno a uno), al llevarse a memoria los datos del bloque se procesan para la generación de los scores de similitudes y se filtra los k elementos de mayor similitud de cada bloque. Es en la generación de los scores que se hace un recorrido cuadrático ya que se relaciona cada término del query con los términos del bloque para la generación de scores. Siendo aquel procedimiento el cual hace que la tendencia de crecimiento del costo computacional se vea cuadrática
