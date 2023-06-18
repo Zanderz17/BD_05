@@ -13,7 +13,7 @@ class NewsModel():
             with connection.cursor() as cursor:
                 cursor.execute(
                     f"""SELECT id_, title, ts_rank_cd(search_txt, query) AS score
-                        FROM json_to_pos, phraseto_tsquery('english','{query}') query
+                        FROM articles_database, phraseto_tsquery('english','{query}') query
                         WHERE query @@ search_txt
                         ORDER BY score DESC
                         LIMIT {top_k};""")

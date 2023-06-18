@@ -67,7 +67,7 @@ function Python_Component() {
           <tr>
             <th>ID</th>
             <th>Title</th>
-            <th>Rank</th>
+            <th>Score</th>
           </tr>
         </thead>
         <tbody>
