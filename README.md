@@ -88,6 +88,8 @@ Se testeó la carga de datos/documentos para cantidades rangos distintos de dato
 El rango de [5,000: 50,000] evidenciaría el crecimiento de la complejidad computacional en cantidades de datos pequeñas, mientras que el rango de [100,000: 500,000] evidenciaría el crecimiento de la complejidad computacional en cantidades de datos grandes.
 El procedimiento de carga se datos se realizó tanto en Postgres como en el algoritmo creado en Python.
 
+### Rango [5,000: 50,000], int = 5,000
+
 |  | Python | Postgres |
 |-----------|-------|----------------|
 | 500	|19,53 |1,977 |
@@ -105,10 +107,22 @@ El procedimiento de carga se datos se realizó tanto en Postgres como en el algo
 
 <img src="./00_Imagenes_Informe/Carga2.png"  width="65%">
 
+### Rango [100,000: 500,000], int = 100,000
+
+|  | Python | Postgres |
+|-----------|-------|----------------|
+|100.000|1850,83  |171,72 |
+|200.000|4675,33  |403,63 |
+|300.000|12041,23 |1182,05 |
+|400.000|31138,03 |2801,95 |
+|500.000|81176,83 |7945,27 |
+
 ## Búsqueda
 
 Las búsquedas se realizaron sobre las mismas cantidades de datos cargadas de modo que los intervalos [5,000: 50,000] y [100,000: 500,000] se mantienen.
 El procedimiento de búsqueda se realizó tanto en Postgres como en el algoritmo creado en Python.
+
+### Rango [5,000: 50,000], int = 5,000
 
 |  | Python | Postgres |
 |-----------|-------|----------------|
@@ -126,3 +140,13 @@ El procedimiento de búsqueda se realizó tanto en Postgres como en el algoritmo
 <img src="./00_Imagenes_Informe/Busqueda1.png"  width="65%">
 
 <img src="./00_Imagenes_Informe/Busqueda2.png"  width="65%">
+
+### Rango [100,000: 500,000], int = 100,000
+
+|  | Python | Postgres |
+|-----------|-------|----------------|
+|100.000|9,061   |0,254 |
+|200.000|27,366  |0,596 |
+|300.000|56,941  |1,853 |
+|400.000|127,441 |3,357 |
+|500.000|301,655 |6,441 |
